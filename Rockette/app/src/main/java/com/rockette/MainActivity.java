@@ -47,8 +47,14 @@ public class MainActivity extends AppCompatActivity implements OnTouchListener{
     private static native void move_Left();
     private static native void Stop();
     private static native void Fire(int num);
-
-
+    
+    static {
+        System.loadLibrary("move_Up");
+        System.loadLibrary("move_Down");
+        System.loadLibrary("move_Right");
+        System.loadLibrary("move_Left");
+        System.loadLibrary("Fire");
+    }
     @Override
     public boolean onTouch(View vw, MotionEvent event){
 
