@@ -1,0 +1,9 @@
+VM : lo52 - lo52
+
+	- bootanimation
+	- fond d’écran
+	- ligne pour compiler avec linaro : 
+
+	$ make TARGET_PRODUCT=arrow TARGET_TOOLS_PREFIX=/home/lo52tp/LO52_projet/Sources/android-toolchain-eabi/bin/arm-linux-androideabi- TARGET_SIMULATOR=false KERNEL_CONFIG=android_omap4plus_defconfig TARGET_NO_HARDWAREGFX=1
+
+	- méthode d’installation d’Android
