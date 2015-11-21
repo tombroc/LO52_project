@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import java.util.EventListener;
 
-public class MainActivity extends AppCompatActivity implements OnTouchListener{
+public class MainActivity extends AppCompatActivity{
 
     private static final int ACTION_UP = 1;
     private static final int ACTION_DOWN = 0;
@@ -28,39 +28,10 @@ public class MainActivity extends AppCompatActivity implements OnTouchListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         buttonL = (Button)findViewById(R.id.buttonL);
-        buttonL.setOnTouchListener(this);
-        buttonR = (Button)findViewById(R.id.buttonR);
-        buttonR.setOnTouchListener(this);
-        buttonU = (Button)findViewById(R.id.buttonU);
-        buttonU.setOnTouchListener(this);
-        buttonD = (Button)findViewById(R.id.buttonD);
-        buttonD.setOnTouchListener(this);
-        buttonF = (Button)findViewById(R.id.buttonF);
-        buttonF.setOnTouchListener(this);
-        txtzone = (TextView)findViewById(R.id.textView);
-    }
-
-
-    private static native void move_Up();
-    private static native void move_Down();
-    private static native void move_Right();
-    private static native void move_Left();
-    private static native void Stop();
-    private static native void Fire(int num);
-    
-    static {
-        System.loadLibrary("move_Up");
-        System.loadLibrary("move_Down");
-        System.loadLibrary("move_Right");
-        System.loadLibrary("move_Left");
-        System.loadLibrary("Fire");
-    }
-    @Override
-    public boolean onTouch(View vw, MotionEvent event){
-
-        switch(vw.getId()){
-           case R.id.buttonL:
-                switch(event.getAction()){
+        buttonL.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View vw, MotionEvent event) {
+                switch (event.getAction()) {
                     case ACTION_DOWN:
                         move_Left();
 
@@ -71,68 +42,127 @@ public class MainActivity extends AppCompatActivity implements OnTouchListener{
                     default:
                         break;
                 }
-                break;
-            case R.id.buttonR:
-                switch(event.getAction()){
+                return true;
+            }
+        });
+
+        buttonR = (Button)findViewById(R.id.buttonR);
+        buttonR.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View vw, MotionEvent event) {
+                switch (event.getAction()) {
                     case ACTION_DOWN:
                         move_Right();
                         break;
                     case ACTION_UP:
-                        txtzone.append("\nStop moving right");
                         Stop();
                         break;
                     default:
                         break;
                 }
-                break;
-            case R.id.buttonU:
+                return true;
+            }
+        });
+        buttonU = (Button)findViewById(R.id.buttonU);
+        buttonU.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View vw, MotionEvent event) {
                 switch(event.getAction()){
                     case ACTION_DOWN:
                         move_Up();
                         break;
                     case ACTION_UP:
-                        txtzone.append("\nStop moving up");
                         Stop();
                         break;
                     default:
                         break;
                 }
-                break;
-            case R.id.buttonD:
+                return true;
+            }
+        });
+
+        buttonD = (Button)findViewById(R.id.buttonD);
+        buttonD.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View vw, MotionEvent event) {
                 switch(event.getAction()){
                     case ACTION_DOWN:
                         move_Down();
                         break;
                     case ACTION_UP:
-                        txtzone.append("\nStop moving down");
                         Stop();
                         break;
                     default:
                         break;
                 }
-                break;
+                return true;
+            }
+        });
 
-            case R.id.buttonF1:
+        buttonF = (Button)findViewById(R.id.buttonF1);
+        buttonF.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 txtzone.setText("Fire 1");
                 Fire(1);
-                break;
-
-            case R.id.buttonF2:
+            }
+        });
+        buttonF = (Button)findViewById(R.id.buttonF2);
+        buttonF.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 txtzone.setText("Fire 2");
                 Fire(2);
-                break;
+            }
+        });
 
-            case R.id.buttonF3:
+        buttonF = (Button)findViewById(R.id.buttonF3);
+        buttonF.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 txtzone.setText("Fire 3");
                 Fire(3);
-                break;
-            default:
-                break;
-        }
-        return true;
+            }
+        });
+
+        txtzone = (TextView)findViewById(R.id.textView);
     }
 
+/*
+    private static native void move_Up();
+    private static native void move_Down();
+    private static native void move_Right();
+    private static native void move_Left();
+    private static native void Stop();
+    private static native void Fire(int num);
 
+    static {
+        System.loadLibrary("move_Up");
+        System.loadLibrary("move_Down");
+        System.loadLibrary("move_Right");
+        System.loadLibrary("move_Left");
+        System.loadLibrary("Fire");
+    }
+    */
+    public void move_Up(){
+        txtzone.setText("Start moving UP...");
+    }
+
+    public void move_Down(){
+        txtzone.setText("Start moving DOWN...");
+    }
+    public void move_Right(){
+        txtzone.setText("Start moving RIGHT...");
+    }
+    public void move_Left(){
+        txtzone.setText("Start moving LEFT...");
+    }
+    public void Stop(){
+        txtzone.append("\nStop moving");
+    }
+    public void Fire(int num){
+        txtzone.setText(String.format("Fire missile %s", num));
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
